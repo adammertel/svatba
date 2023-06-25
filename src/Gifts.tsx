@@ -2,7 +2,7 @@ import { Container, Heading } from "react-bulma-components";
 
 function Gifts() {
   return (
-    <div style={{}}>
+    <div className="page-section" style={{}}>
       <Container>
         <Heading size={3}>Dary</Heading>
       </Container>

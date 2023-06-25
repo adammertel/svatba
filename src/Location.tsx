@@ -44,7 +44,7 @@ function Location() {
   }, []);
 
   return (
-    <div style={{}}>
+    <div style={{}} className="page-section">
       <Container>
         <Heading size={3}>Miesto</Heading>
         <Block>

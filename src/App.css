@@ -1,0 +1,56 @@
+label.checkbox svg {
+  margin-left: 5px;
+  vertical-align: text-top;
+}
+button.button svg {
+  margin-left: 5px;
+  vertical-align: text-top;
+}
+
+label.checkbox {
+  margin-right: 15px;
+  vertical-align: middle;
+}
+label.checkbox .tag {
+  margin-right: 15px;
+  margin-left: 5px;
+  vertical-align: top;
+}
+label.label svg {
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+label.label {
+  margin-right: 15px;
+}
+
+.person-block {
+  margin-bottom: 40px;
+  padding-left: 20px;
+}
+
+.page-section {
+  margin-bottom: 60px;
+}
+
+.person-tag .tag {
+  margin-bottom: 2px !important;
+  background-color: lightgreen !important;
+  color: white !important;
+}
+.person-tag-category {
+  padding-right: 0px !important;
+}
+.person-tag .person-tag-remove {
+  cursor: pointer;
+  /* color: red !important;
+  background-color: white !important;
+  border: 2px solid lightgreen; */
+}
+.person-tag .person-tag-remove:hover {
+  cursor: pointer;
+  color: red !important;
+  background-color: white !important;
+  border: 2px solid lightgreen;
+}
