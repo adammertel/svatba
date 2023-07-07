@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Block,
   Container,
@@ -10,7 +10,13 @@ import {
   Tag,
 } from "react-bulma-components";
 
-import { MdChildFriendly, MdNoDrinks, MdOutlineNoMeals } from "react-icons/md";
+import {
+  MdChildFriendly,
+  MdMail,
+  MdNoDrinks,
+  MdOutlineNoMeals,
+  MdWarning,
+} from "react-icons/md";
 import {
   FaChild,
   FaMale,
@@ -25,11 +31,22 @@ import { GiDress, GiFruitBowl, GiLargeDress, GiTie } from "react-icons/gi";
 import { PiBeerSteinFill } from "react-icons/pi";
 
 type PersonCategory = "m" | "f" | "c" | "t";
+type PersonFood =
+  | "all"
+  | "vegan"
+  | "vegetarian"
+  | "frutarian"
+  | "celiac"
+  | "breatharian";
+
+type PersonDrink = "beer" | "wine" | "destilates" | "gin" | "non-alcoholic";
 interface Person {
   name: string;
   category: PersonCategory;
-  food: "all" | "vegan" | "vegetarian" | "frutarian" | "celiac" | "breatharian";
+  food: PersonFood;
+  drink: PersonDrink[];
   burger: boolean;
+  warning: boolean;
 }
 
 function FormSection() {
@@ -39,9 +56,32 @@ function FormSection() {
       name: "",
       category: "f",
       food: "all",
+      drink: ["non-alcoholic"],
       burger: true,
+      warning: true,
     },
   ]);
+
+  const isFormValid = useMemo<boolean>(() => {
+    return (
+      teamName.length > 0 &&
+      persons.length > 0 &&
+      persons.every((p) => p.name.length > 0)
+    );
+  }, [persons, teamName]);
+
+  const handleCreateNewPerson = () => {
+    const newPersons = [...persons];
+    newPersons.push({
+      name: "",
+      category: "f",
+      food: "all",
+      burger: true,
+      drink: ["non-alcoholic"],
+      warning: true,
+    });
+    setPersons(newPersons);
+  };
 
   const handlePersonCategory = (
     personIndex: number,
@@ -49,6 +89,63 @@ function FormSection() {
   ) => {
     const newPersons = [...persons];
     newPersons[personIndex].category = newCategory;
+
+    if (newCategory === "c") {
+      newPersons[personIndex].drink = ["non-alcoholic"];
+      newPersons[personIndex].warning = false;
+    } else if (newCategory === "t") {
+      newPersons[personIndex].food = "all";
+      newPersons[personIndex].burger = false;
+      newPersons[personIndex].warning = false;
+      newPersons[personIndex].drink = ["non-alcoholic"];
+    }
+    setPersons(newPersons);
+  };
+
+  const handlePersonFood = (personIndex: number, newFood: PersonFood) => {
+    const newPersons = [...persons];
+    newPersons[personIndex].food = newFood;
+    setPersons(newPersons);
+  };
+
+  const handlePersonDrink = (personIndex: number, newDrink: PersonDrink) => {
+    const newPersons = [...persons];
+    let drinks = newPersons[personIndex].drink;
+    let warning = newPersons[personIndex].warning;
+
+    if (newDrink === "non-alcoholic") {
+      if (drinks.includes("non-alcoholic")) {
+        drinks = [];
+      } else {
+        drinks = ["non-alcoholic"];
+      }
+    } else {
+      drinks = drinks.filter((d) => d !== "non-alcoholic");
+      if (drinks.includes(newDrink)) {
+        drinks = drinks.filter((d) => d !== newDrink);
+        if (drinks.length === 0) {
+          warning = true;
+          drinks = ["non-alcoholic"];
+        }
+      } else {
+        warning = false;
+        drinks.push(newDrink);
+      }
+    }
+    newPersons[personIndex].drink = drinks;
+    newPersons[personIndex].warning = warning;
+    setPersons(newPersons);
+  };
+
+  const handlePersonWarning = (personIndex: number, newWarning: boolean) => {
+    const newPersons = [...persons];
+    newPersons[personIndex].warning = !newPersons[personIndex].warning;
+    setPersons(newPersons);
+  };
+
+  const handlePersonBurger = (personIndex: number, newBurger: boolean) => {
+    const newPersons = [...persons];
+    newPersons[personIndex].burger = newBurger;
     setPersons(newPersons);
   };
 
@@ -62,15 +159,16 @@ function FormSection() {
         </Block>
         <Box>
           {/* team name */}
-          <Form.Field horizontal textSize={"small"}>
-            <Form.Label>Názov tímu</Form.Label>
+          <Form.Field horizontal>
+            {/* <Form.Label>Názov tímu</Form.Label> */}
             <Form.Control>
               <Form.Input
-                style={{ border: "1px solid black" }}
-                size="small"
-                placeholder="meno + priezvisko"
-                type=""
+                size="medium"
+                color={teamName.length > 0 ? "success" : "danger"}
+                placeholder="názov tímu"
+                type="text"
                 value={teamName}
+                className="team-name-input"
                 onChange={(e) => {
                   setTeamName(e.target.value);
                 }}
@@ -89,22 +187,18 @@ function FormSection() {
 
             return (
               <div className="person-block">
-                <Tag.Group hasAddons className="person-tag">
-                  <Tag className="person-tag-category" size="medium">
+                <div className="person-tag">
+                  <div className="person-tag-category">
                     {categoryIcons[person.category]}
-                  </Tag>
-                  <Tag
-                    color="primary"
-                    className="person-tag-name"
-                    size="medium"
-                  >
-                    {`Osoba ${index + 1}: `}{" "}
-                    <b style={{ marginLeft: "5px" }}> {person.name}</b>
-                  </Tag>
-                  <Tag
-                    color="white"
+                  </div>
+                  <div>{`Osoba "${
+                    person.name ? person.name : index + 1
+                  }"`}</div>
+                  <Button
+                    color="danger"
+                    inverted
                     className="person-tag-remove"
-                    size="medium"
+                    size="small"
                     onClick={() => {
                       const newPersons = [...persons].filter(
                         (p, i) => i !== index
@@ -112,19 +206,22 @@ function FormSection() {
                       setPersons(newPersons);
                     }}
                   >
-                    <FaTrash size={15} />
-                  </Tag>
-                </Tag.Group>
-                <Form.Field key={`person-${index}`}>
+                    <FaTrash size={12} />
+                  </Button>
+                </div>
+                <Form.Field
+                  key={`person-${index}`}
+                  className="person-information"
+                >
                   {/* name */}
-                  <Form.Field horizontal>
-                    <Form.Label>Meno osoby</Form.Label>
+                  <Form.Field kind="addons">
+                    <Form.Label>1. Meno osoby</Form.Label>
                     <Form.Control>
                       <Form.Input
-                        style={{ border: "1px solid black" }}
+                        color={person.name.length > 0 ? "success" : "danger"}
                         size="small"
                         placeholder="meno + priezvisko"
-                        type=""
+                        type="text"
                         value={person.name}
                         onChange={(e) => {
                           const newPersons = [...persons];
@@ -137,7 +234,7 @@ function FormSection() {
 
                   {/* category */}
                   <Form.Field kind="addons">
-                    <Form.Label>{`Som / identifikujem sa ako`}</Form.Label>
+                    <Form.Label>{`2. Som / identifikujem sa ako`}</Form.Label>
                     <Form.Control>
                       <Form.Checkbox
                         checked={person.category === "f"}
@@ -170,93 +267,207 @@ function FormSection() {
                     </Form.Control>
                   </Form.Field>
 
+                  {/* jedlo */}
+                  {/* food: "all" | "vegan" | "vegetarian" | "frutarian" | "celiac" | "breatharian"; */}
+
+                  {person.category !== "t" && (
+                    <Form.Field kind="addons">
+                      <Form.Label>{`3. Jedlo preferujem / zjem`}</Form.Label>
+                      <Form.Control>
+                        <Form.Field>
+                          <Form.Control>
+                            <Form.Checkbox
+                              onClick={() => handlePersonFood(index, "all")}
+                            >
+                              bez obmedzení
+                            </Form.Checkbox>
+                            <Form.Checkbox
+                              onClick={() => handlePersonFood(index, "vegan")}
+                            >
+                              vegán
+                            </Form.Checkbox>
+                            <Form.Checkbox
+                              onClick={() =>
+                                handlePersonFood(index, "vegetarian")
+                              }
+                            >
+                              vegetarian
+                            </Form.Checkbox>
+                            <Form.Checkbox
+                              onClick={() => handlePersonFood(index, "celiac")}
+                            >
+                              frutarian
+                            </Form.Checkbox>
+                            <Form.Checkbox
+                              onClick={() => handlePersonFood(index, "celiac")}
+                            >
+                              celiatik
+                            </Form.Checkbox>
+                            <Form.Checkbox
+                              onClick={() =>
+                                handlePersonFood(index, "breatharian")
+                              }
+                            >
+                              bretarián
+                            </Form.Checkbox>
+                          </Form.Control>
+                        </Form.Field>
+                      </Form.Control>
+                    </Form.Field>
+                  )}
+
                   {/* burger */}
-                  <Form.Field kind="addons">
-                    <Form.Label>
-                      {`Mám záujem o večerný burger`}
-                      <FaHamburger
-                        style={{
-                          verticalAlign: "baseline",
-                          marginRight: "5px",
-                        }}
-                      />
-                    </Form.Label>
-                    <Form.Control>
-                      <Form.Field>
+                  {person.category !== "t" && (
+                    <Form.Field kind="addons">
+                      <Form.Label>{`4. Mám záujem o večerný burger`}</Form.Label>
+                      <Form.Control>
+                        <Form.Field>
+                          <Form.Control>
+                            <Form.Checkbox
+                              checked={person.burger === true}
+                              onChange={() => {
+                                handlePersonBurger(index, true);
+                              }}
+                            >
+                              áno, prosím - jeden hamburger pre mňa
+                              <FaHamburger
+                                style={{
+                                  verticalAlign: "baseline",
+                                  marginRight: "5px",
+                                }}
+                              />
+                              <Tag color="info">odporúčame</Tag>
+                            </Form.Checkbox>
+                            <Form.Checkbox
+                              checked={person.burger === false}
+                              onChange={() => {
+                                handlePersonBurger(index, false);
+                              }}
+                            >
+                              nie, ďakujem - dám si niečo iné
+                            </Form.Checkbox>
+                          </Form.Control>
+                        </Form.Field>
+                      </Form.Control>
+                    </Form.Field>
+                  )}
+
+                  {/* alcohol */}
+                  {["f", "m"].includes(person.category) && (
+                    <>
+                      <Form.Field kind="addons">
+                        <Form.Label>{`5. Počas večera preferujem popíjať`}</Form.Label>
+
                         <Form.Control>
-                          <Form.Checkbox>
-                            áno, prosím - jeden hamburger pre mňa
-                            <Tag color="info">odporúčame</Tag>
+                          <Form.Checkbox
+                            checked={person.drink.includes("beer")}
+                            onClick={() => handlePersonDrink(index, "beer")}
+                          >
+                            pivo
+                            <PiBeerSteinFill />
                           </Form.Checkbox>
-                          <Form.Checkbox>
-                            nie, ďakujem - dám si niečo iné, zrovna nemám chuť
+                          <Form.Checkbox
+                            checked={person.drink.includes("wine")}
+                            onClick={() => handlePersonDrink(index, "wine")}
+                          >
+                            vínko
+                            <BiSolidWine />
+                          </Form.Checkbox>
+                          <Form.Checkbox
+                            checked={person.drink.includes("destilates")}
+                            onClick={() =>
+                              handlePersonDrink(index, "destilates")
+                            }
+                          >
+                            destiláty
+                            <GiFruitBowl />
+                          </Form.Checkbox>
+                          <Form.Checkbox
+                            checked={person.drink.includes("gin")}
+                            onClick={() => handlePersonDrink(index, "gin")}
+                          >
+                            gin tonic
+                            <BiSolidDrink />
+                          </Form.Checkbox>
+                          <Form.Checkbox
+                            checked={person.drink.includes("non-alcoholic")}
+                            onClick={() =>
+                              handlePersonDrink(index, "non-alcoholic")
+                            }
+                          >
+                            nepijem
+                            <MdNoDrinks />
+                            <Tag color="warning">neodporúčame</Tag>
                           </Form.Checkbox>
                         </Form.Control>
                       </Form.Field>
-                    </Form.Control>
-                  </Form.Field>
-
-                  {/* alcohol */}
-                  <Form.Field kind="addons">
-                    <Form.Label>{`Počas večera plánujem popíjať`}</Form.Label>
-
-                    <Form.Control>
-                      <Form.Checkbox>
-                        pivo
-                        <PiBeerSteinFill />
-                      </Form.Checkbox>
-                      <Form.Checkbox>
-                        vínko
-                        <BiSolidWine />
-                      </Form.Checkbox>
-                      <Form.Checkbox>
-                        destiláty
-                        <GiFruitBowl />
-                      </Form.Checkbox>
-                      <Form.Checkbox>
-                        gin tonic
-                        <BiSolidDrink />
-                      </Form.Checkbox>
-                      <Form.Checkbox>
-                        nepijem
-                        <MdNoDrinks />
-                      </Form.Checkbox>
-                    </Form.Control>
-                  </Form.Field>
-                  <Block>
-                    <Message color="danger">
-                      <Message.Header>
-                        <span>Upozornenie - Alkohol spôsobuje bezvedomie</span>
-                        <Button remove />
-                      </Message.Header>
-                      <Message.Body>
-                        Beriem na vedomie, že budem v bezvedomí
+                      {person.warning === false && (
                         <Block>
-                          <Form.Checkbox>Beriem na vedomie</Form.Checkbox>
+                          <Message color="danger">
+                            <Message.Header>
+                              <span>
+                                Upozornenie - Alkohol spôsobuje bezvedomie
+                              </span>
+                            </Message.Header>
+                            <Message.Body>
+                              <Block>
+                                <Form.Checkbox
+                                  checked={person.warning}
+                                  onChange={() => {
+                                    handlePersonWarning(index, !person.warning);
+                                  }}
+                                >
+                                  Beriem na vedomie, že budem v bezvedomí
+                                </Form.Checkbox>
+                              </Block>
+                            </Message.Body>
+                          </Message>
                         </Block>
-                      </Message.Body>
-                    </Message>
-                  </Block>
+                      )}
+                    </>
+                  )}
                 </Form.Field>
               </div>
             );
           })}
 
-          <Button
-            onClick={() => {
-              const newPersons = [...persons];
-              newPersons.push({
-                name: "",
-                category: "f",
-                food: "all",
-                burger: true,
-              });
-              setPersons(newPersons);
-            }}
-          >
-            Pridať ďalšiu osobu do tímu
-            <FaPlus />
-          </Button>
+          <div>
+            <Button
+              onClick={() => {
+                handleCreateNewPerson();
+              }}
+              size="small"
+              color="info"
+            >
+              Pridať ďalšiu osobu do tímu
+              <FaPlus />
+            </Button>
+          </div>
+          <hr />
+          <div>
+            <Button
+              onClick={() => {
+                handleCreateNewPerson();
+              }}
+              color="success"
+              disabled={isFormValid === false}
+              id="send-form-button"
+            >
+              Odoslať formulár
+              <MdMail />
+            </Button>
+
+            {isFormValid === false && (
+              <Message color="danger">
+                <Message.Body>
+                  <Block>
+                    <MdWarning size={20} /> Skontrolujte prosím, či sú vyplnené
+                    všetky mená a názov tímu
+                  </Block>
+                </Message.Body>
+              </Message>
+            )}
+          </div>
         </Box>
       </Container>
     </div>
