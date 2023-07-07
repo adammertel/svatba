@@ -92,11 +92,11 @@ function FormSection() {
 
     if (newCategory === "c") {
       newPersons[personIndex].drink = ["non-alcoholic"];
-      newPersons[personIndex].warning = false;
+      newPersons[personIndex].warning = true;
     } else if (newCategory === "t") {
       newPersons[personIndex].food = "all";
       newPersons[personIndex].burger = false;
-      newPersons[personIndex].warning = false;
+      newPersons[personIndex].warning = true;
       newPersons[personIndex].drink = ["non-alcoholic"];
     }
     setPersons(newPersons);
@@ -179,26 +179,46 @@ function FormSection() {
           {/* people */}
           {persons.map((person, index) => {
             const categoryIcons = {
-              m: <GiTie size={20} />,
-              f: <GiDress size={20} />,
-              c: <FaChild size={20} />,
-              t: <MdChildFriendly size={20} />,
+              m: (
+                <GiTie
+                  size={20}
+                  style={{ verticalAlign: "baseline", marginTop: "3px" }}
+                />
+              ),
+              f: (
+                <GiDress
+                  size={20}
+                  style={{ verticalAlign: "baseline", marginTop: "3px" }}
+                />
+              ),
+              c: (
+                <FaChild
+                  size={20}
+                  style={{ verticalAlign: "baseline", marginTop: "3px" }}
+                />
+              ),
+              t: (
+                <MdChildFriendly
+                  size={20}
+                  style={{ verticalAlign: "baseline", marginTop: "3px" }}
+                />
+              ),
             };
 
             return (
               <div className="person-block">
                 <div className="person-tag">
-                  <div className="person-tag-category">
-                    {categoryIcons[person.category]}
-                  </div>
-                  <div>{`Osoba "${
-                    person.name ? person.name : index + 1
-                  }"`}</div>
+                  <Tag color="black" size="medium">
+                    <div>{`${index + 1}. Osoba "${person.name}"`}</div>
+                    <div className="person-tag-category">
+                      {categoryIcons[person.category]}
+                    </div>
+                  </Tag>
                   <Button
                     color="danger"
                     inverted
                     className="person-tag-remove"
-                    size="small"
+                    size="medium"
                     onClick={() => {
                       const newPersons = [...persons].filter(
                         (p, i) => i !== index
