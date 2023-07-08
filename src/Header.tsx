@@ -1,4 +1,3 @@
-import "./App.css";
 import { Container, Heading, Hero } from "react-bulma-components";
 
 function Header() {

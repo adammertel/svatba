@@ -8,6 +8,7 @@ import {
   Message,
   Box,
   Tag,
+  Card,
 } from "react-bulma-components";
 
 import {
@@ -51,6 +52,13 @@ interface Person {
 
 function FormSection() {
   const [teamName, setTeamName] = useState<string>("");
+
+  const [teamAccommodationFriday, setTeamAccommodationFriday] =
+    useState<boolean>(false);
+  const [teamAccommodationSaturday, setTeamAccommodationSaturday] =
+    useState<boolean>(false);
+
+  const [teamNote, setTeamNote] = useState<string>("");
   const [persons, setPersons] = useState<Person[]>([
     {
       name: "",
@@ -137,6 +145,13 @@ function FormSection() {
     setPersons(newPersons);
   };
 
+  const categoryIcons = {
+    m: <GiTie size={20} style={{ verticalAlign: "baseline" }} />,
+    f: <GiDress size={20} style={{ verticalAlign: "baseline" }} />,
+    c: <FaChild size={20} style={{ verticalAlign: "baseline" }} />,
+    t: <MdChildFriendly size={20} style={{ verticalAlign: "baseline" }} />,
+  };
+
   const handlePersonWarning = (personIndex: number, newWarning: boolean) => {
     const newPersons = [...persons];
     newPersons[personIndex].warning = !newPersons[personIndex].warning;
@@ -155,9 +170,10 @@ function FormSection() {
         <Heading size={3}>Formulár</Heading>
         <Block>
           Prosíme, aby pozvaní hostia vyplnili nasledujúci formulár. Ideálne
-          vyplniť jeden formulár za jeden tím.
+          vyplniť jeden formulár za jeden tím. Po spracovaní všetkých informácií
+          vás budeme prípadne kontaktovať.
         </Block>
-        <Box>
+        <Box id="form">
           {/* team name */}
           <Form.Field horizontal>
             {/* <Form.Label>Názov tímu</Form.Label> */}
@@ -176,278 +192,319 @@ function FormSection() {
             </Form.Control>
           </Form.Field>
 
-          {/* people */}
-          {persons.map((person, index) => {
-            const categoryIcons = {
-              m: (
-                <GiTie
-                  size={20}
-                  style={{ verticalAlign: "baseline", marginTop: "3px" }}
-                />
-              ),
-              f: (
-                <GiDress
-                  size={20}
-                  style={{ verticalAlign: "baseline", marginTop: "3px" }}
-                />
-              ),
-              c: (
-                <FaChild
-                  size={20}
-                  style={{ verticalAlign: "baseline", marginTop: "3px" }}
-                />
-              ),
-              t: (
-                <MdChildFriendly
-                  size={20}
-                  style={{ verticalAlign: "baseline", marginTop: "3px" }}
-                />
-              ),
-            };
-
-            return (
-              <div className="person-block">
-                <div className="person-tag">
-                  <Tag color="black" size="medium">
-                    <div>{`${index + 1}. Osoba "${person.name}"`}</div>
-                    <div className="person-tag-category">
-                      {categoryIcons[person.category]}
-                    </div>
-                  </Tag>
-                  <Button
-                    color="danger"
-                    inverted
-                    className="person-tag-remove"
-                    size="medium"
-                    onClick={() => {
-                      const newPersons = [...persons].filter(
-                        (p, i) => i !== index
-                      );
-                      setPersons(newPersons);
+          {/* accommodation Saturday */}
+          <Form.Field kind="addons">
+            <Form.Label>{`Náš tím má záujem o ubytovanie na noc zo soboty 26 na nedeľu 27`}</Form.Label>
+            <Form.Control>
+              <Form.Field>
+                <Form.Control>
+                  <Form.Checkbox
+                    checked={teamAccommodationSaturday === true}
+                    onChange={() => {
+                      setTeamAccommodationSaturday(true);
                     }}
                   >
-                    <FaTrash size={12} />
-                  </Button>
-                </div>
-                <Form.Field
-                  key={`person-${index}`}
-                  className="person-information"
-                >
-                  {/* name */}
-                  <Form.Field kind="addons">
-                    <Form.Label>1. Meno osoby</Form.Label>
-                    <Form.Control>
-                      <Form.Input
-                        color={person.name.length > 0 ? "success" : "danger"}
-                        size="small"
-                        placeholder="meno + priezvisko"
-                        type="text"
-                        value={person.name}
-                        onChange={(e) => {
-                          const newPersons = [...persons];
-                          newPersons[index].name = e.target.value;
-                          setPersons(newPersons);
-                        }}
-                      />
-                    </Form.Control>
-                  </Form.Field>
+                    áno
+                  </Form.Checkbox>
+                  <Form.Checkbox
+                    checked={teamAccommodationSaturday === false}
+                    onChange={() => {
+                      setTeamAccommodationSaturday(false);
+                    }}
+                  >
+                    nie, máme vlastné ubytovanie
+                  </Form.Checkbox>
+                </Form.Control>
+              </Form.Field>
+            </Form.Control>
+          </Form.Field>
 
-                  {/* category */}
-                  <Form.Field kind="addons">
-                    <Form.Label>{`2. Som / identifikujem sa ako`}</Form.Label>
-                    <Form.Control>
-                      <Form.Checkbox
-                        checked={person.category === "f"}
-                        onClick={() => handlePersonCategory(index, "f")}
-                      >
-                        lahodná žena
-                        {categoryIcons["f"]}
-                      </Form.Checkbox>
-                      <Form.Checkbox
-                        checked={person.category === "m"}
-                        onClick={() => handlePersonCategory(index, "m")}
-                      >
-                        spotenený muž
-                        {categoryIcons["m"]}
-                      </Form.Checkbox>
-                      <Form.Checkbox
-                        checked={person.category === "c"}
-                        onClick={() => handlePersonCategory(index, "c")}
-                      >
-                        {`nádejný mladý človek < 18`}
-                        {categoryIcons["c"]}
-                      </Form.Checkbox>
-                      <Form.Checkbox
-                        checked={person.category === "t"}
-                        onClick={() => handlePersonCategory(index, "t")}
-                      >
-                        {`nemluvňa - prosíme rodičov o vyplnenie`}
-                        {categoryIcons["t"]}
-                      </Form.Checkbox>
-                    </Form.Control>
-                  </Form.Field>
+          {/* accommodation Friday */}
+          <Form.Field kind="addons">
+            <Form.Label>{`Náš tím má záujem o ubytovanie aj o ubytovanie z piatka na sobotu `}</Form.Label>
+            <Form.Control>
+              <Form.Field>
+                <Form.Control>
+                  <Form.Checkbox
+                    checked={teamAccommodationFriday === true}
+                    onChange={() => {
+                      setTeamAccommodationFriday(true);
+                    }}
+                  >
+                    áno
+                  </Form.Checkbox>
+                  <Form.Checkbox
+                    checked={teamAccommodationFriday === false}
+                    onChange={() => {
+                      setTeamAccommodationFriday(false);
+                    }}
+                  >
+                    nie, prídeme až v sobotu
+                  </Form.Checkbox>
+                </Form.Control>
+              </Form.Field>
+            </Form.Control>
+          </Form.Field>
 
-                  {/* jedlo */}
-                  {/* food: "all" | "vegan" | "vegetarian" | "frutarian" | "celiac" | "breatharian"; */}
+          {/* people */}
+          {persons.map((person, index) => {
+            return (
+              <Card className="person-block" colorVariant="primary">
+                <Card.Header color="primary">
+                  <Card.Header.Title>
+                    <Heading size={4}>
+                      <span className="person-tag-category">
+                        {categoryIcons[person.category]}
+                      </span>
+                      <b>{person.name} </b>
+                      <span style={{ fontSize: "0.6em" }}>
+                        (Osoba {`${index + 1}`})
+                      </span>
+                    </Heading>
+                  </Card.Header.Title>
 
-                  {person.category !== "t" && (
+                  <Card.Header.Icon>
+                    <FaTrash
+                      size={20}
+                      className="person-tag-remove"
+                      onClick={() => {
+                        const newPersons = [...persons].filter(
+                          (p, i) => i !== index
+                        );
+                        setPersons(newPersons);
+                      }}
+                    />
+                  </Card.Header.Icon>
+                </Card.Header>
+
+                <Card.Content>
+                  <Form.Field
+                    key={`person-${index}`}
+                    className="person-information"
+                  >
+                    {/* name */}
                     <Form.Field kind="addons">
-                      <Form.Label>{`3. Jedlo preferujem / zjem`}</Form.Label>
+                      <Form.Label>1. Meno osoby</Form.Label>
                       <Form.Control>
-                        <Form.Field>
-                          <Form.Control>
-                            <Form.Checkbox
-                              onClick={() => handlePersonFood(index, "all")}
-                            >
-                              bez obmedzení
-                            </Form.Checkbox>
-                            <Form.Checkbox
-                              onClick={() => handlePersonFood(index, "vegan")}
-                            >
-                              vegán
-                            </Form.Checkbox>
-                            <Form.Checkbox
-                              onClick={() =>
-                                handlePersonFood(index, "vegetarian")
-                              }
-                            >
-                              vegetarian
-                            </Form.Checkbox>
-                            <Form.Checkbox
-                              onClick={() => handlePersonFood(index, "celiac")}
-                            >
-                              frutarian
-                            </Form.Checkbox>
-                            <Form.Checkbox
-                              onClick={() => handlePersonFood(index, "celiac")}
-                            >
-                              celiatik
-                            </Form.Checkbox>
-                            <Form.Checkbox
-                              onClick={() =>
-                                handlePersonFood(index, "breatharian")
-                              }
-                            >
-                              bretarián
-                            </Form.Checkbox>
-                          </Form.Control>
-                        </Form.Field>
+                        <Form.Input
+                          color={person.name.length > 0 ? "black" : "danger"}
+                          size="small"
+                          placeholder="celé meno"
+                          type="text"
+                          value={person.name}
+                          onChange={(e) => {
+                            const newPersons = [...persons];
+                            newPersons[index].name = e.target.value;
+                            setPersons(newPersons);
+                          }}
+                        />
                       </Form.Control>
                     </Form.Field>
-                  )}
 
-                  {/* burger */}
-                  {person.category !== "t" && (
+                    {/* category */}
                     <Form.Field kind="addons">
-                      <Form.Label>{`4. Mám záujem o večerný burger`}</Form.Label>
+                      <Form.Label>{`2. Som / identifikujem sa ako`}</Form.Label>
                       <Form.Control>
-                        <Form.Field>
-                          <Form.Control>
-                            <Form.Checkbox
-                              checked={person.burger === true}
-                              onChange={() => {
-                                handlePersonBurger(index, true);
-                              }}
-                            >
-                              áno, prosím - jeden hamburger pre mňa
-                              <FaHamburger
-                                style={{
-                                  verticalAlign: "baseline",
-                                  marginRight: "5px",
-                                }}
-                              />
-                              <Tag color="info">odporúčame</Tag>
-                            </Form.Checkbox>
-                            <Form.Checkbox
-                              checked={person.burger === false}
-                              onChange={() => {
-                                handlePersonBurger(index, false);
-                              }}
-                            >
-                              nie, ďakujem - dám si niečo iné
-                            </Form.Checkbox>
-                          </Form.Control>
-                        </Form.Field>
+                        <Form.Checkbox
+                          checked={person.category === "f"}
+                          onClick={() => handlePersonCategory(index, "f")}
+                        >
+                          lahodná žena
+                          {categoryIcons["f"]}
+                        </Form.Checkbox>
+                        <Form.Checkbox
+                          checked={person.category === "m"}
+                          onClick={() => handlePersonCategory(index, "m")}
+                        >
+                          spotenený muž
+                          {categoryIcons["m"]}
+                        </Form.Checkbox>
+                        <Form.Checkbox
+                          checked={person.category === "c"}
+                          onClick={() => handlePersonCategory(index, "c")}
+                        >
+                          {`nádejný mladý človek < 18`}
+                          {categoryIcons["c"]}
+                        </Form.Checkbox>
+                        <Form.Checkbox
+                          checked={person.category === "t"}
+                          onClick={() => handlePersonCategory(index, "t")}
+                        >
+                          {`nemluvňa - prosíme rodičov o vyplnenie`}
+                          {categoryIcons["t"]}
+                        </Form.Checkbox>
                       </Form.Control>
                     </Form.Field>
-                  )}
 
-                  {/* alcohol */}
-                  {["f", "m"].includes(person.category) && (
-                    <>
+                    {/* jedlo */}
+                    {/* food: "all" | "vegan" | "vegetarian" | "frutarian" | "celiac" | "breatharian"; */}
+
+                    {person.category !== "t" && (
                       <Form.Field kind="addons">
-                        <Form.Label>{`5. Počas večera preferujem popíjať`}</Form.Label>
-
+                        <Form.Label>{`3. Jedlo preferujem / zjem`}</Form.Label>
                         <Form.Control>
-                          <Form.Checkbox
-                            checked={person.drink.includes("beer")}
-                            onClick={() => handlePersonDrink(index, "beer")}
-                          >
-                            pivo
-                            <PiBeerSteinFill />
-                          </Form.Checkbox>
-                          <Form.Checkbox
-                            checked={person.drink.includes("wine")}
-                            onClick={() => handlePersonDrink(index, "wine")}
-                          >
-                            vínko
-                            <BiSolidWine />
-                          </Form.Checkbox>
-                          <Form.Checkbox
-                            checked={person.drink.includes("destilates")}
-                            onClick={() =>
-                              handlePersonDrink(index, "destilates")
-                            }
-                          >
-                            destiláty
-                            <GiFruitBowl />
-                          </Form.Checkbox>
-                          <Form.Checkbox
-                            checked={person.drink.includes("gin")}
-                            onClick={() => handlePersonDrink(index, "gin")}
-                          >
-                            gin tonic
-                            <BiSolidDrink />
-                          </Form.Checkbox>
-                          <Form.Checkbox
-                            checked={person.drink.includes("non-alcoholic")}
-                            onClick={() =>
-                              handlePersonDrink(index, "non-alcoholic")
-                            }
-                          >
-                            nepijem
-                            <MdNoDrinks />
-                            <Tag color="warning">neodporúčame</Tag>
-                          </Form.Checkbox>
+                          <Form.Field>
+                            <Form.Control>
+                              <Form.Checkbox
+                                onClick={() => handlePersonFood(index, "all")}
+                              >
+                                bez obmedzení
+                              </Form.Checkbox>
+                              <Form.Checkbox
+                                onClick={() => handlePersonFood(index, "vegan")}
+                              >
+                                vegán
+                              </Form.Checkbox>
+                              <Form.Checkbox
+                                onClick={() =>
+                                  handlePersonFood(index, "vegetarian")
+                                }
+                              >
+                                vegetarian
+                              </Form.Checkbox>
+                              <Form.Checkbox
+                                onClick={() =>
+                                  handlePersonFood(index, "celiac")
+                                }
+                              >
+                                frutarian
+                              </Form.Checkbox>
+                              <Form.Checkbox
+                                onClick={() =>
+                                  handlePersonFood(index, "celiac")
+                                }
+                              >
+                                celiatik
+                              </Form.Checkbox>
+                              <Form.Checkbox
+                                onClick={() =>
+                                  handlePersonFood(index, "breatharian")
+                                }
+                              >
+                                bretarián
+                              </Form.Checkbox>
+                            </Form.Control>
+                          </Form.Field>
                         </Form.Control>
                       </Form.Field>
-                      {person.warning === false && (
-                        <Block>
-                          <Message color="danger">
-                            <Message.Header>
-                              <span>
-                                Upozornenie - Alkohol spôsobuje bezvedomie
-                              </span>
-                            </Message.Header>
-                            <Message.Body>
-                              <Block>
-                                <Form.Checkbox
-                                  checked={person.warning}
-                                  onChange={() => {
-                                    handlePersonWarning(index, !person.warning);
+                    )}
+
+                    {/* burger */}
+                    {person.category !== "t" && (
+                      <Form.Field kind="addons">
+                        <Form.Label>{`4. Mám záujem o večerný burger`}</Form.Label>
+                        <Form.Control>
+                          <Form.Field>
+                            <Form.Control>
+                              <Form.Checkbox
+                                checked={person.burger === true}
+                                onChange={() => {
+                                  handlePersonBurger(index, true);
+                                }}
+                              >
+                                áno, prosím - jeden hamburger pre mňa
+                                <FaHamburger
+                                  style={{
+                                    verticalAlign: "baseline",
+                                    marginRight: "5px",
                                   }}
-                                >
-                                  Beriem na vedomie, že budem v bezvedomí
-                                </Form.Checkbox>
-                              </Block>
-                            </Message.Body>
-                          </Message>
-                        </Block>
-                      )}
-                    </>
-                  )}
-                </Form.Field>
-              </div>
+                                />
+                                <Tag color="info">odporúčame</Tag>
+                              </Form.Checkbox>
+                              <Form.Checkbox
+                                checked={person.burger === false}
+                                onChange={() => {
+                                  handlePersonBurger(index, false);
+                                }}
+                              >
+                                nie, ďakujem - dám si niečo iné
+                              </Form.Checkbox>
+                            </Form.Control>
+                          </Form.Field>
+                        </Form.Control>
+                      </Form.Field>
+                    )}
+
+                    {/* alcohol */}
+                    {["f", "m"].includes(person.category) && (
+                      <>
+                        <Form.Field kind="addons">
+                          <Form.Label>{`5. Počas večera preferujem popíjať`}</Form.Label>
+
+                          <Form.Control>
+                            <Form.Checkbox
+                              checked={person.drink.includes("beer")}
+                              onClick={() => handlePersonDrink(index, "beer")}
+                            >
+                              pivo
+                              <PiBeerSteinFill />
+                            </Form.Checkbox>
+                            <Form.Checkbox
+                              checked={person.drink.includes("wine")}
+                              onClick={() => handlePersonDrink(index, "wine")}
+                            >
+                              vínko
+                              <BiSolidWine />
+                            </Form.Checkbox>
+                            <Form.Checkbox
+                              checked={person.drink.includes("destilates")}
+                              onClick={() =>
+                                handlePersonDrink(index, "destilates")
+                              }
+                            >
+                              destiláty
+                              <GiFruitBowl />
+                            </Form.Checkbox>
+                            <Form.Checkbox
+                              checked={person.drink.includes("gin")}
+                              onClick={() => handlePersonDrink(index, "gin")}
+                            >
+                              gin tonic
+                              <BiSolidDrink />
+                            </Form.Checkbox>
+                            <Form.Checkbox
+                              checked={person.drink.includes("non-alcoholic")}
+                              onClick={() =>
+                                handlePersonDrink(index, "non-alcoholic")
+                              }
+                            >
+                              nepijem
+                              <MdNoDrinks />
+                              <Tag color="info">neodporúčame</Tag>
+                            </Form.Checkbox>
+                          </Form.Control>
+                        </Form.Field>
+                        {person.warning === false && (
+                          <Block>
+                            <Message color="danger">
+                              <Message.Header>
+                                <span>
+                                  Upozornenie - Alkohol spôsobuje bezvedomie
+                                </span>
+                              </Message.Header>
+                              <Message.Body>
+                                <Block>
+                                  <Form.Checkbox
+                                    checked={person.warning}
+                                    onChange={() => {
+                                      handlePersonWarning(
+                                        index,
+                                        !person.warning
+                                      );
+                                    }}
+                                  >
+                                    Beriem na vedomie, že budem v bezvedomí
+                                  </Form.Checkbox>
+                                </Block>
+                              </Message.Body>
+                            </Message>
+                          </Block>
+                        )}
+                      </>
+                    )}
+                  </Form.Field>
+                </Card.Content>
+              </Card>
             );
           })}
 
@@ -457,24 +514,45 @@ function FormSection() {
                 handleCreateNewPerson();
               }}
               size="small"
-              color="info"
+              color="black"
             >
               Pridať ďalšiu osobu do tímu
               <FaPlus />
             </Button>
           </div>
+
+          <Block />
+
+          {/* team notes */}
+          <Form.Field horizontal kind="addons">
+            <Form.Label>Poznámky</Form.Label>
+            <Form.Control fullwidth>
+              <Form.Textarea
+                size="small"
+                placeholder="poznámky + čo sa nevošlo"
+                value={teamNote}
+                className="team-name-input"
+                onChange={(e) => {
+                  setTeamNote(e.target.value);
+                }}
+              />
+            </Form.Control>
+          </Form.Field>
           <hr />
           <div>
             <Button
               onClick={() => {
                 handleCreateNewPerson();
               }}
-              color="success"
+              color="green"
               disabled={isFormValid === false}
               id="send-form-button"
             >
-              Odoslať formulár
               <MdMail />
+              {`Odoslať formulár za tím ${
+                teamName ? '"' + teamName + '"' : ""
+              }`}
+              {persons.map((p) => categoryIcons[p.category])}
             </Button>
 
             {isFormValid === false && (

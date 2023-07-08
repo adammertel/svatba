@@ -10,7 +10,6 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 import { useEffect, useState } from "react";
-import "./App.css";
 
 function Location() {
   const [mapEl, setMapEl] = useState<any>(null);

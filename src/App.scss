@@ -1,0 +1,103 @@
+$custom-colors: (
+  "green": (
+    #3f946b,
+    #fff,
+  ),
+  "green-light": (
+    #b1d2c2,
+    #fff,
+  ),
+  "wine": (
+    #80374b,
+    #fff,
+  ),
+);
+
+.page-section {
+  margin-bottom: 60px;
+}
+
+#form {
+  background-color: white !important;
+  label.checkbox svg {
+    margin-left: 5px;
+    vertical-align: text-top;
+  }
+  button.button svg {
+    margin-left: 5px;
+    margin-right: 5px;
+    vertical-align: text-top;
+  }
+
+  label.checkbox {
+    margin-right: 25px;
+    vertical-align: middle;
+    .tag {
+      margin-right: 15px;
+      margin-left: 5px;
+      vertical-align: top;
+    }
+  }
+  label.label {
+    margin-right: 15px;
+    font-weight: 500;
+    width: 250px;
+    min-width: 250px;
+
+    svg {
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+  }
+
+  .card-header {
+    background-color: #b1d2c2 !important;
+  }
+
+  .person-block {
+    margin-bottom: 40px;
+    background-color: white !important;
+  }
+
+  input[type="text"] {
+    width: 200px;
+    border-radius: 5px !important;
+    border-width: 1px !important;
+  }
+
+  input.team-name-input {
+    width: 300px;
+    border-radius: 5px !important;
+    border-width: 2px !important;
+  }
+
+  .person-tag {
+    margin-bottom: 2px !important;
+    display: inline-flex;
+    font-weight: bolder;
+    text-transform: uppercase;
+  }
+
+  .person-information {
+    padding-left: 20px;
+  }
+
+  .person-tag-category {
+    padding-right: 0px !important;
+    vertical-align: baseline;
+  }
+
+  #send-form-button {
+    margin-bottom: 10px;
+  }
+}
+
+@import "../node_modules/bulma/sass/utilities/_all.sass";
+@import "../node_modules/bulma/sass/base/_all.sass";
+@import "../node_modules/bulma/sass/elements/button.sass";
+@import "../node_modules/bulma/sass/elements/container.sass";
+@import "../node_modules/bulma/sass/elements/title.sass";
+@import "../node_modules/bulma/sass/form/_all.sass";
+@import "../node_modules/bulma/sass/components/navbar.sass";
+@import "../node_modules/bulma/sass/layout/hero.sass";
+@import "../node_modules/bulma/sass/layout/section.sass";
