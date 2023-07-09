@@ -1,6 +1,9 @@
+$color-green: #3f946b;
+$color-white: #fff;
+
 $custom-colors: (
   "green": (
-    #3f946b,
+    $color-green,
     #fff,
   ),
   "green-light": (
@@ -89,6 +92,31 @@ $custom-colors: (
 
   #send-form-button {
     margin-bottom: 10px;
+  }
+}
+
+#header {
+  .tabs {
+    ul {
+      li.is-active {
+        a {
+          color: $color-green;
+          font-weight: 800;
+        }
+      }
+      li {
+        a {
+          color: $color-white;
+          font-weight: 300;
+        }
+        &:hover {
+          a {
+            color: $color-green;
+            font-weight: 800;
+          }
+        }
+      }
+    }
   }
 }
 

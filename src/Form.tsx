@@ -53,8 +53,6 @@ interface Person {
 function FormSection() {
   const [teamName, setTeamName] = useState<string>("");
 
-  const [teamAccommodationFriday, setTeamAccommodationFriday] =
-    useState<boolean>(false);
   const [teamAccommodationSaturday, setTeamAccommodationSaturday] =
     useState<boolean>(false);
 
@@ -165,13 +163,13 @@ function FormSection() {
   };
 
   return (
-    <div style={{}} className="page-section">
+    <div className="page-section" id="section-form">
       <Container>
         <Heading size={3}>Formulár</Heading>
         <Block>
           Prosíme, aby pozvaní hostia vyplnili nasledujúci formulár. Ideálne
           vyplniť jeden formulár za jeden tím. Po spracovaní všetkých informácií
-          vás budeme prípadne kontaktovať.
+          vás budeme prípadne kontaktovať s ďalšími inštrukciami.
         </Block>
         <Box id="form">
           {/* team name */}
@@ -213,33 +211,6 @@ function FormSection() {
                     }}
                   >
                     nie, máme vlastné ubytovanie
-                  </Form.Checkbox>
-                </Form.Control>
-              </Form.Field>
-            </Form.Control>
-          </Form.Field>
-
-          {/* accommodation Friday */}
-          <Form.Field kind="addons">
-            <Form.Label>{`Náš tím má záujem o ubytovanie aj o ubytovanie z piatka na sobotu `}</Form.Label>
-            <Form.Control>
-              <Form.Field>
-                <Form.Control>
-                  <Form.Checkbox
-                    checked={teamAccommodationFriday === true}
-                    onChange={() => {
-                      setTeamAccommodationFriday(true);
-                    }}
-                  >
-                    áno
-                  </Form.Checkbox>
-                  <Form.Checkbox
-                    checked={teamAccommodationFriday === false}
-                    onChange={() => {
-                      setTeamAccommodationFriday(false);
-                    }}
-                  >
-                    nie, prídeme až v sobotu
                   </Form.Checkbox>
                 </Form.Control>
               </Form.Field>
@@ -323,14 +294,14 @@ function FormSection() {
                           checked={person.category === "c"}
                           onClick={() => handlePersonCategory(index, "c")}
                         >
-                          {`nádejný mladý človek < 18`}
+                          {`nádejný mladý človek 3-18`}
                           {categoryIcons["c"]}
                         </Form.Checkbox>
                         <Form.Checkbox
                           checked={person.category === "t"}
                           onClick={() => handlePersonCategory(index, "t")}
                         >
-                          {`nemluvňa - prosíme rodičov o vyplnenie`}
+                          {`nemluvňa - prosíme zákonných zástupcov o vyplnenie`}
                           {categoryIcons["t"]}
                         </Form.Checkbox>
                       </Form.Control>
@@ -529,7 +500,7 @@ function FormSection() {
             <Form.Control fullwidth>
               <Form.Textarea
                 size="small"
-                placeholder="poznámky + čo sa nevošlo"
+                placeholder="špeciálne požiadavky + niečo, čo by sme mali vedieť"
                 value={teamNote}
                 className="team-name-input"
                 onChange={(e) => {

@@ -10,10 +10,18 @@ import Program from "./Program";
 import Accommodation from "./Accommodation";
 
 function App() {
+  const scrollToSection = (sectionId) => {
+    const anchor = document.querySelector(`#${sectionId}`);
+    console.log(anchor);
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
     <>
       <div id="App">
-        <Header />
+        <Header scrollToSection={scrollToSection} />
         <Section>
           <Location />
           <Accommodation />

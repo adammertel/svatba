@@ -21,6 +21,7 @@ function Location() {
     if (mapEl === null) {
       try {
         const map = L.map("map");
+        // map.setMinZoom(12);
         setMapEl(map);
         map.setView(llMapCenter, 12);
         const point = L.marker(llKostka);
@@ -32,7 +33,8 @@ function Location() {
             attribution:
               '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             subdomains: "abcd",
-            maxZoom: 20,
+            maxZoom: 14,
+            minZoom: 8,
           }
         );
         CartoDB_Positron.addTo(map);
@@ -43,7 +45,7 @@ function Location() {
   }, []);
 
   return (
-    <div style={{}} className="page-section">
+    <div style={{}} className="page-section" id="section-location">
       <Container>
         <Heading size={3}>Miesto</Heading>
         <Block>

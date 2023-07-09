@@ -1,8 +1,8 @@
-import { Container, Heading, Hero } from "react-bulma-components";
+import { Container, Heading, Hero, Tabs, Tab } from "react-bulma-components";
 
-function Header() {
+function Header({ scrollToSection }: { scrollToSection: Function }) {
   return (
-    <div style={{}}>
+    <div style={{}} id="header">
       <Hero
         size="large"
         style={{
@@ -13,7 +13,7 @@ function Header() {
           backgroundSize: "auto 850px",
           backgroundBlendMode: "normal",
           backgroundAttachment: "local",
-          padding: "4rem",
+          padding: "0 4rem",
         }}
       >
         <Hero.Body>
@@ -26,7 +26,40 @@ function Header() {
             </Heading>
           </Container>
         </Hero.Body>
-        <Hero.Footer>Footer</Hero.Footer>
+        <Hero.Footer>
+          <nav className="tabs is-boxed is-fullwidth" color="primary">
+            <div className="container">
+              <ul>
+                <li key="location" className="is-active">
+                  <a onClick={() => scrollToSection("section-location")}>
+                    Miesto
+                  </a>
+                </li>
+                <li key="accommodation">
+                  <a onClick={() => scrollToSection("section-accommodation")}>
+                    Ubytovanie
+                  </a>
+                </li>
+                <li key="food">
+                  <a onClick={() => scrollToSection("section-food")}>Strava</a>
+                </li>
+                <li>
+                  <a onClick={() => scrollToSection("section-form")}>
+                    Formulár
+                  </a>
+                </li>
+                <li key="gifts">
+                  <a onClick={() => scrollToSection("section-gifts")}>Dary</a>
+                </li>
+                <li key="program">
+                  <a onClick={() => scrollToSection("section-program")}>
+                    Program
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </Hero.Footer>
       </Hero>
     </div>
   );
