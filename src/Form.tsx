@@ -48,25 +48,13 @@ interface Person {
   drink: PersonDrink[];
   burger: boolean;
   warning: boolean;
+  accomodation?: boolean;
 }
 
 function FormSection() {
   const [teamName, setTeamName] = useState<string>("");
-
-  const [teamAccommodationSaturday, setTeamAccommodationSaturday] =
-    useState<boolean>(false);
-
   const [teamNote, setTeamNote] = useState<string>("");
-  const [persons, setPersons] = useState<Person[]>([
-    {
-      name: "",
-      category: "f",
-      food: "all",
-      drink: ["non-alcoholic"],
-      burger: true,
-      warning: true,
-    },
-  ]);
+  const [persons, setPersons] = useState<Person[]>([]);
 
   const isFormValid = useMemo<boolean>(() => {
     return (
@@ -85,6 +73,7 @@ function FormSection() {
       burger: true,
       drink: ["non-alcoholic"],
       warning: true,
+      accomodation: false,
     });
     setPersons(newPersons);
   };
@@ -162,6 +151,15 @@ function FormSection() {
     setPersons(newPersons);
   };
 
+  const handlePersonAccomodation = (
+    personIndex: number,
+    newAccomodation: boolean
+  ) => {
+    const newPersons = [...persons];
+    newPersons[personIndex].accomodation = newAccomodation;
+    setPersons(newPersons);
+  };
+
   return (
     <div className="page-section" id="section-form">
       <Container>
@@ -187,33 +185,6 @@ function FormSection() {
                   setTeamName(e.target.value);
                 }}
               />
-            </Form.Control>
-          </Form.Field>
-
-          {/* accommodation Saturday */}
-          <Form.Field kind="addons">
-            <Form.Label>{`Náš tím má záujem o ubytovanie na noc zo soboty 26 na nedeľu 27`}</Form.Label>
-            <Form.Control>
-              <Form.Field>
-                <Form.Control>
-                  <Form.Checkbox
-                    checked={teamAccommodationSaturday === true}
-                    onChange={() => {
-                      setTeamAccommodationSaturday(true);
-                    }}
-                  >
-                    áno
-                  </Form.Checkbox>
-                  <Form.Checkbox
-                    checked={teamAccommodationSaturday === false}
-                    onChange={() => {
-                      setTeamAccommodationSaturday(false);
-                    }}
-                  >
-                    nie, máme vlastné ubytovanie
-                  </Form.Checkbox>
-                </Form.Control>
-              </Form.Field>
             </Form.Control>
           </Form.Field>
 
@@ -396,11 +367,38 @@ function FormSection() {
                       </Form.Field>
                     )}
 
+                    {/* accommodation Saturday */}
+                    <Form.Field kind="addons">
+                      <Form.Label>{`5. Táto osoba by rada ubytovať na noc zo soboty 26 na nedeľu 27`}</Form.Label>
+                      <Form.Control>
+                        <Form.Field>
+                          <Form.Control>
+                            <Form.Checkbox
+                              checked={person.accomodation === true}
+                              onChange={() => {
+                                handlePersonAccomodation(index, true);
+                              }}
+                            >
+                              áno
+                            </Form.Checkbox>
+                            <Form.Checkbox
+                              checked={person.accomodation === false}
+                              onChange={() => {
+                                handlePersonAccomodation(index, false);
+                              }}
+                            >
+                              nie
+                            </Form.Checkbox>
+                          </Form.Control>
+                        </Form.Field>
+                      </Form.Control>
+                    </Form.Field>
+
                     {/* alcohol */}
                     {["f", "m"].includes(person.category) && (
                       <>
                         <Form.Field kind="addons">
-                          <Form.Label>{`5. Počas večera preferujem popíjať`}</Form.Label>
+                          <Form.Label>{`6. Počas večera preferujem popíjať`}</Form.Label>
 
                           <Form.Control>
                             <Form.Checkbox
