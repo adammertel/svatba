@@ -8,12 +8,12 @@ import Gifts from "./Gifts";
 import Food from "./Food";
 import Program from "./Program";
 import Accommodation from "./Accommodation";
+import FooterPart from "./Footer";
 import { useEffect, useState } from "react";
 
 function App() {
   const scrollToSection = (sectionId: string) => {
     const anchor = document.querySelector(`#${sectionId}`);
-    console.log(anchor);
     if (anchor) {
       anchor.scrollIntoView({ behavior: "smooth", block: "center" });
     }
@@ -41,6 +41,7 @@ function App() {
           <Gifts />
           <Program />
         </Section>
+        <FooterPart></FooterPart>
       </div>
     </>
   );

@@ -21,8 +21,8 @@ function Food() {
         </Block>
         <Block>Sme si istí, že sa máte na čo tešiť.</Block>
 
-        <figure class="image is-fullwidth" style={{ textAlign: "center" }}>
-          <video width="600" controls autoplay>
+        <figure className="image is-fullwidth" style={{ textAlign: "center" }}>
+          <video width="600" controls autoPlay={true}>
             <source src="food1.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>

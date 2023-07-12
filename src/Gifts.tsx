@@ -1,4 +1,4 @@
-import { Block, Container, Heading } from "react-bulma-components";
+import { Block, Container, Heading, Image } from "react-bulma-components";
 
 function Gifts() {
   return (
@@ -11,6 +11,9 @@ function Gifts() {
         </Block>
         <Block>
           Určite nenoste kvetiny ani jedlo, budeme toho mať dostatok :)
+        </Block>
+        <Block style={{ textAlign: "center" }}>
+          <Image src="gifts1.jpg" size={"3by2"} />
         </Block>
       </Container>
     </div>
