@@ -20,6 +20,13 @@ function Food() {
           mandlovicu, alebo pre fajnšmekrov borovičku a samozrejme domáce.
         </Block>
         <Block>Sme si istí, že sa máte na čo tešiť.</Block>
+
+        <figure class="image is-fullwidth" style={{ textAlign: "center" }}>
+          <video width="600" controls autoplay>
+            <source src="food1.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </figure>
       </Container>
     </div>
   );

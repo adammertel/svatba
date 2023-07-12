@@ -22,7 +22,7 @@ function Header({ scrollToSection }: { scrollToSection: Function }) {
               Svatba Petra + Adam
             </Heading>
             <Heading style={{ color: "white" }} size={2} subtitle>
-              26.August 2023
+              26. August 2023
             </Heading>
           </Container>
         </Hero.Body>
