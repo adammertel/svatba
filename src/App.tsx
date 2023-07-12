@@ -8,9 +8,10 @@ import Gifts from "./Gifts";
 import Food from "./Food";
 import Program from "./Program";
 import Accommodation from "./Accommodation";
+import { useEffect, useState } from "react";
 
 function App() {
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = (sectionId: string) => {
     const anchor = document.querySelector(`#${sectionId}`);
     console.log(anchor);
     if (anchor) {
@@ -18,10 +19,20 @@ function App() {
     }
   };
 
+  const [scroll, setScroll] = useState<number>(0);
+
+  useEffect(() => {
+    document.onscroll = () => {
+      const newScroll =
+        window.scrollY || document.getElementsByTagName("html")[0].scrollTop;
+      setScroll(newScroll);
+    };
+  }, []);
+
   return (
     <>
       <div id="App">
-        <Header scrollToSection={scrollToSection} />
+        <Header scrollToSection={scrollToSection} scroll={scroll} />
         <Section>
           <Location />
           <Accommodation />

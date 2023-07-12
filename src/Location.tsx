@@ -20,7 +20,7 @@ function Location() {
   useEffect(() => {
     if (mapEl === null) {
       try {
-        const map = L.map("map");
+        const map = L.map("map", { scrollWheelZoom: false });
         // map.setMinZoom(12);
         setMapEl(map);
         map.setView(llMapCenter, 12);
@@ -60,6 +60,11 @@ function Location() {
         <Block>
           Objekt disponuje vlastným parkoviskom, kde by sme mali zvládnuť
           zaparkovať cca 20-30 áut.
+        </Block>
+
+        <Block>
+          V areály sa nachádza aj bazén, takže určite si nezabudnite pribaliť
+          plavky :).
         </Block>
 
         <Block id="kostka-pictures">

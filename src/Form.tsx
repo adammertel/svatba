@@ -28,7 +28,13 @@ import {
   FaHamburger,
 } from "react-icons/fa";
 import { BiSolidDrink, BiSolidWine } from "react-icons/bi";
-import { GiDress, GiFruitBowl, GiLargeDress, GiTie } from "react-icons/gi";
+import {
+  GiDress,
+  GiFruitBowl,
+  GiLargeDress,
+  GiStrongMan,
+  GiTie,
+} from "react-icons/gi";
 import { PiBeerSteinFill } from "react-icons/pi";
 
 type PersonCategory = "m" | "f" | "c" | "t";
@@ -133,7 +139,7 @@ function FormSection() {
   };
 
   const categoryIcons = {
-    m: <GiTie size={20} style={{ verticalAlign: "baseline" }} />,
+    m: <GiStrongMan size={20} style={{ verticalAlign: "baseline" }} />,
     f: <GiDress size={20} style={{ verticalAlign: "baseline" }} />,
     c: <FaChild size={20} style={{ verticalAlign: "baseline" }} />,
     t: <MdChildFriendly size={20} style={{ verticalAlign: "baseline" }} />,

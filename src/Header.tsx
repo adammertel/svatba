@@ -1,8 +1,28 @@
-import { Container, Heading, Hero, Tabs, Tab } from "react-bulma-components";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Container, Heading, Hero } from "react-bulma-components";
 
-function Header({ scrollToSection }: { scrollToSection: Function }) {
+function Header({
+  scrollToSection,
+  scroll,
+}: {
+  scrollToSection: Function;
+  scroll: number;
+}) {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [headerHeight, setHeaderHeight] = useState<number>(0);
+
+  const navStatic: boolean = useMemo(() => {
+    return scroll > headerHeight;
+  }, [scroll, headerHeight]);
+
+  useEffect(() => {
+    if (heroRef.current) {
+      setHeaderHeight(heroRef.current.clientHeight - 20);
+    }
+  }, []);
+
   return (
-    <div style={{}} id="header">
+    <div id="header" ref={heroRef}>
       <Hero
         size="large"
         style={{
@@ -27,7 +47,13 @@ function Header({ scrollToSection }: { scrollToSection: Function }) {
           </Container>
         </Hero.Body>
         <Hero.Footer>
-          <nav className="tabs is-boxed is-fullwidth" color="primary">
+          <nav
+            className="tabs is-boxed is-fullwidth"
+            color="primary"
+            style={{
+              zIndex: 100,
+            }}
+          >
             <div className="container">
               <ul>
                 <li key="location" className="is-active">
