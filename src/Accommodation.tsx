@@ -6,7 +6,7 @@ function Accomodation() {
       <Container>
         <Heading size={3}>Ubytovanie</Heading>
         <Block>
-          V areály svatby bude možné ubytovať iba malý počet hostí; pre
+          V areáli svatby bude možné ubytovať iba malý počet hostí; pre
           niektorých ďalších máme na noc zo soboty na nedeľu bývanie v okolitých
           obciach. Ubytovať sa bude možné v sobotu od 15, odubytovanie potom
           bude v nedeľu do 15. Aby sme vedeli zorganizovať dostupné kapacity,
