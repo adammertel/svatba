@@ -6,9 +6,8 @@ function DressCode() {
       <Container>
         <Heading size={3}>Dress code</Heading>
         <Block>
-          Naša svadba bude ladená do vínovej, eukaliptovej | lesnej zelenej a
-          starorúžovej. Oblečte sa však predovšetkým tak, aby ste sa cítili
-          dobre a pohodlne.
+          Naša svadba bude ladená do vínovej, eukaliptovej a starorúžovej.
+          Oblečte sa však predovšetkým tak, aby ste sa cítili dobre a pohodlne.
         </Block>
         <Block style={{ textAlign: "center" }}>
           <img src="dresscode.png" style={{ maxWidth: "300px" }} />

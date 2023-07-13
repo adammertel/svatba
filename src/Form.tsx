@@ -60,7 +60,7 @@ function FormSection() {
     emailInit("SYk_4yBxt3ODyX49j");
     console.log("sending form");
 
-    let table = `<table><thead><tr><th>Name</th><th>Category</th><th>Food</th><th>Drink</th><th>Burger</th>><th>Accommodation</th></tr></thead>`;
+    let table = `<table><thead><tr><th>Name</th><th>Category</th><th>Food</th><th>Drink</th><th>Burger</th><th>Accommodation</th></tr></thead>`;
 
     table += "<tbody>";
     for (let person of persons) {
@@ -68,7 +68,11 @@ function FormSection() {
       let accommodation = person.accomodation ? "Yes" : "No";
       let burger = person.burger ? "Yes" : "No";
 
-      table += `<tr><td>${person.name}</td><td>${person.category}</td><td>${person.food}</td><td>${drinks}</td><td>${burger}</td><td>${accommodation}</td></tr>`;
+      table += `<tr><td>${person.name}</td><td>${
+        categoryLabels[person.category]
+      }</td><td>${
+        person.food
+      }</td><td>${drinks}</td><td>${burger}</td><td>${accommodation}</td></tr>`;
     }
 
     table += "</tbody></table>";
@@ -163,6 +167,13 @@ function FormSection() {
     f: <PiDressFill size={20} style={{ verticalAlign: "baseline" }} />,
     c: <FaChild size={20} style={{ verticalAlign: "baseline" }} />,
     t: <MdChildFriendly size={20} style={{ verticalAlign: "baseline" }} />,
+  };
+
+  const categoryLabels = {
+    m: "Muž",
+    f: "Žena",
+    c: "Dieťa",
+    t: "Tutu",
   };
 
   const handlePersonWarning = (personIndex: number) => {

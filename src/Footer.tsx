@@ -7,7 +7,7 @@ function FooterPart() {
         <Footer>
           <img
             src="footer.jpg"
-            style={{ height: "fit-content", width: "auto" }}
+            style={{ width: "fit-content", height: "auto" }}
           />
           <Heading subtitle size={1}>
             Tešíme sa na vás!

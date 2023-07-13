@@ -33,7 +33,7 @@ function Header({
           backgroundSize: "auto 780px",
           backgroundBlendMode: "normal",
           backgroundAttachment: "local",
-          padding: "0 4rem",
+          padding: "0",
           position: navStatic ? "unset" : "unset",
         }}
       >
