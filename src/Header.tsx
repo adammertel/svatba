@@ -55,7 +55,12 @@ function Header({
             className="tabs is-boxed is-fullwidth"
             color="primary"
             style={{
-              zIndex: 100,
+              zIndex: 2000,
+              position: navStatic ? "fixed" : "absolute",
+              top: navStatic ? "0" : "unset",
+              left: 0,
+              right: 0,
+              background: "#455c40",
             }}
           >
             <div className="container">
