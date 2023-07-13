@@ -30,7 +30,7 @@ function Header({
           backgroundImage: "url(header-opaque.png)",
           backgroundRepeat: "no-repeat",
           backgroundPositionX: "70%",
-          backgroundSize: "auto 780px",
+          backgroundSize: "auto 100%",
           backgroundBlendMode: "normal",
           backgroundAttachment: "local",
           padding: "0",
