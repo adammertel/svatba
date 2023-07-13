@@ -589,6 +589,7 @@ function FormSection() {
             <Form.Label>Poznámky</Form.Label>
             <Form.Control fullwidth>
               <Form.Textarea
+                maxLength={300}
                 size="small"
                 placeholder="špeciálne požiadavky + niečo, čo by sme mali vedieť"
                 value={teamNote}
