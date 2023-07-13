@@ -10,7 +10,7 @@ function FooterPart() {
             Tešíme sa na vás!
           </Heading>
           <Heading subtitle size={3}>
-            Petra + Adam
+            Petra & Adam
           </Heading>
         </Footer>
       </div>
