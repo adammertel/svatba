@@ -6,6 +6,7 @@ import { Section } from "react-bulma-components";
 import FormSection from "./Form";
 import Gifts from "./Gifts";
 import Food from "./Food";
+import DressCode from "./DressCode";
 import Program from "./Program";
 import Accommodation from "./Accommodation";
 import FooterPart from "./Footer";
@@ -37,6 +38,7 @@ function App() {
           <Location />
           <Accommodation />
           <Food />
+          <DressCode />
           <FormSection />
           <Gifts />
           <Program />

@@ -64,7 +64,7 @@ function Location() {
 
         <Block>
           V areály sa nachádza aj bazén, takže určite si nezabudnite pribaliť
-          plavky :).
+          plavky. :)
         </Block>
 
         <Block id="kostka-pictures">

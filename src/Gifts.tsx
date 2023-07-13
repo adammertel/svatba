@@ -10,10 +10,10 @@ function Gifts() {
           ani hodnotným alebo originálnym zážitkom.
         </Block>
         <Block>
-          Určite nenoste kvetiny ani jedlo, budeme toho mať dostatok :)
+          Určite nenoste kvetiny ani jedlo, budeme toho mať dostatok. :)
         </Block>
         <Block style={{ textAlign: "center" }}>
-          <img src="gifts1.jpg" style={{ height: "400px" }} />
+          <img src="gifts1.jpg" style={{ maxWidth: "300px" }} />
         </Block>
       </Container>
     </div>

@@ -4,9 +4,9 @@ function Program() {
   return (
     <div style={{}} className="page-section" id="section-program">
       <Container>
-        <Heading size={3}>Program</Heading>
+        <Heading size={3}>Na čo sa tešiť?</Heading>
         <Block></Block>
-        <Block>
+        <Block style={{ textAlign: "center" }}>
           <img src="program.png" />
         </Block>
       </Container>

@@ -29,8 +29,8 @@ function Header({
           backgroundColor: "#455c40",
           backgroundImage: "url(header-opaque.png)",
           backgroundRepeat: "no-repeat",
-          backgroundPositionX: "center",
-          backgroundSize: "auto 850px",
+          backgroundPositionX: "70%",
+          backgroundSize: "auto 780px",
           backgroundBlendMode: "normal",
           backgroundAttachment: "local",
           padding: "0 4rem",
@@ -39,8 +39,11 @@ function Header({
       >
         <Hero.Body>
           <Container>
+            <Heading style={{ color: "white" }} size={2} subtitle>
+              Svatba
+            </Heading>
             <Heading style={{ color: "white" }} size={1}>
-              Svatba Petra & Adam
+              Petra & Adam
             </Heading>
             <Heading style={{ color: "white" }} size={2} subtitle>
               26. August 2023
@@ -57,7 +60,7 @@ function Header({
           >
             <div className="container">
               <ul>
-                <li key="location" className="is-active">
+                <li key="location">
                   <a onClick={() => scrollToSection("section-location")}>
                     Miesto
                   </a>
@@ -70,7 +73,12 @@ function Header({
                 <li key="food">
                   <a onClick={() => scrollToSection("section-food")}>Strava</a>
                 </li>
-                <li>
+                <li key="dresscode">
+                  <a onClick={() => scrollToSection("section-dresscode")}>
+                    Dress code
+                  </a>
+                </li>
+                <li key="form">
                   <a onClick={() => scrollToSection("section-form")}>
                     Formulár
                   </a>
