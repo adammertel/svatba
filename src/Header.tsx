@@ -34,12 +34,13 @@ function Header({
           backgroundBlendMode: "normal",
           backgroundAttachment: "local",
           padding: "0 4rem",
+          position: navStatic ? "unset" : "unset",
         }}
       >
         <Hero.Body>
           <Container>
             <Heading style={{ color: "white" }} size={1}>
-              Svatba Petra + Adam
+              Svatba Petra & Adam
             </Heading>
             <Heading style={{ color: "white" }} size={2} subtitle>
               26. August 2023

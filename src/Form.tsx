@@ -164,7 +164,7 @@ function FormSection() {
     t: <MdChildFriendly size={20} style={{ verticalAlign: "baseline" }} />,
   };
 
-  const handlePersonWarning = (personIndex: number, newWarning: boolean) => {
+  const handlePersonWarning = (personIndex: number) => {
     const newPersons = [...persons];
     newPersons[personIndex].warning = !newPersons[personIndex].warning;
     setPersons(newPersons);
@@ -237,7 +237,7 @@ function FormSection() {
                       className="person-tag-remove"
                       onClick={() => {
                         const newPersons = [...persons].filter(
-                          (p, i) => i !== index
+                          (_, i) => i !== index
                         );
                         setPersons(newPersons);
                       }}
@@ -488,10 +488,7 @@ function FormSection() {
                                   <Form.Checkbox
                                     checked={person.warning}
                                     onChange={() => {
-                                      handlePersonWarning(
-                                        index,
-                                        !person.warning
-                                      );
+                                      handlePersonWarning(index);
                                     }}
                                   >
                                     Beriem na vedomie, že budem v bezvedomí

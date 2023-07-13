@@ -1,4 +1,4 @@
-import { Block, Container, Heading, Image } from "react-bulma-components";
+import { Block, Container, Heading } from "react-bulma-components";
 
 function Gifts() {
   return (
