@@ -13,7 +13,7 @@ function Gifts() {
           Určite nenoste kvetiny ani jedlo, budeme toho mať dostatok :)
         </Block>
         <Block style={{ textAlign: "center" }}>
-          <Image src="gifts1.jpg" size={"3by2"} />
+          <img src="gifts1.jpg" style={{ height: "400px" }} />
         </Block>
       </Container>
     </div>

@@ -29,7 +29,7 @@ function Header({
           backgroundColor: "#455c40",
           backgroundImage: "url(header-opaque.png)",
           backgroundRepeat: "no-repeat",
-          backgroundPositionX: "right",
+          backgroundPositionX: "center",
           backgroundSize: "auto 850px",
           backgroundBlendMode: "normal",
           backgroundAttachment: "local",

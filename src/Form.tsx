@@ -1,41 +1,24 @@
 import { useMemo, useState } from "react";
 import {
   Block,
-  Container,
-  Heading,
-  Form,
-  Button,
-  Message,
   Box,
-  Tag,
+  Button,
   Card,
+  Container,
+  Form,
+  Heading,
+  Message,
+  Modal,
+  Tag,
 } from "react-bulma-components";
 
-import {
-  MdChildFriendly,
-  MdMail,
-  MdNoDrinks,
-  MdOutlineNoMeals,
-  MdWarning,
-} from "react-icons/md";
-import {
-  FaChild,
-  FaMale,
-  FaFemale,
-  FaUserTie,
-  FaPlus,
-  FaTrash,
-  FaHamburger,
-} from "react-icons/fa";
+import { FaChild, FaHamburger, FaPlus, FaTrash } from "react-icons/fa";
+import { MdChildFriendly, MdMail, MdNoDrinks, MdWarning } from "react-icons/md";
+
+import { init as emailInit, send as emailSend } from "emailjs-com";
 import { BiSolidDrink, BiSolidWine } from "react-icons/bi";
-import {
-  GiDress,
-  GiFruitBowl,
-  GiLargeDress,
-  GiStrongMan,
-  GiTie,
-} from "react-icons/gi";
-import { PiBeerSteinFill } from "react-icons/pi";
+import { GiFruitBowl, GiStrong } from "react-icons/gi";
+import { PiBeerSteinFill, PiDressFill } from "react-icons/pi";
 
 type PersonCategory = "m" | "f" | "c" | "t";
 type PersonFood =
@@ -62,6 +45,8 @@ function FormSection() {
   const [teamNote, setTeamNote] = useState<string>("");
   const [persons, setPersons] = useState<Person[]>([]);
 
+  const [modalDisplay, setModalDisplay] = useState<boolean>(false);
+
   const isFormValid = useMemo<boolean>(() => {
     return (
       teamName.length > 0 &&
@@ -69,6 +54,40 @@ function FormSection() {
       persons.every((p) => p.name.length > 0)
     );
   }, [persons, teamName]);
+
+  const handleSendForm = () => {
+    emailInit("SYk_4yBxt3ODyX49j");
+    console.log("sending form");
+
+    let table = `<table><thead><tr><th>Name</th><th>Category</th><th>Food</th><th>Drink</th><th>Burger</th>><th>Accommodation</th></tr></thead>`;
+
+    table += "<tbody>";
+    for (let person of persons) {
+      let drinks = person.drink.join(", ");
+      let accommodation = person.accomodation ? "Yes" : "No";
+      let burger = person.burger ? "Yes" : "No";
+
+      table += `<tr><td>${person.name}</td><td>${person.category}</td><td>${person.food}</td><td>${drinks}</td><td>${burger}</td><td>${accommodation}</td></tr>`;
+    }
+
+    table += "</tbody></table>";
+
+    emailSend("service_torxvf8", "template_u3cq14m", {
+      message: table,
+      team_name: teamName,
+      notes: teamNote,
+    }).then(
+      function (response) {
+        console.log("Email successfully sent!", response);
+      },
+      function (error) {
+        console.error("Error sending email:", error);
+      }
+    );
+
+    setPersons([]);
+    setModalDisplay(true);
+  };
 
   const handleCreateNewPerson = () => {
     const newPersons = [...persons];
@@ -139,8 +158,8 @@ function FormSection() {
   };
 
   const categoryIcons = {
-    m: <GiStrongMan size={20} style={{ verticalAlign: "baseline" }} />,
-    f: <GiDress size={20} style={{ verticalAlign: "baseline" }} />,
+    m: <GiStrong size={20} style={{ verticalAlign: "baseline" }} />,
+    f: <PiDressFill size={20} style={{ verticalAlign: "baseline" }} />,
     c: <FaChild size={20} style={{ verticalAlign: "baseline" }} />,
     t: <MdChildFriendly size={20} style={{ verticalAlign: "baseline" }} />,
   };
@@ -171,9 +190,10 @@ function FormSection() {
       <Container>
         <Heading size={3}>Formulár</Heading>
         <Block>
-          Prosíme, aby pozvaní hostia vyplnili nasledujúci formulár. Ideálne
-          vyplniť jeden formulár za jeden tím. Po spracovaní všetkých informácií
-          vás budeme prípadne kontaktovať s ďalšími inštrukciami.
+          Prosíme, aby pozvaní hostia, ktorí boli o to priamo poprosení,
+          vyplnili nasledujúci formulár. Ideálne vyplniť jeden formulár za jeden
+          tím. Po spracovaní všetkých informácií vás budeme prípadne kontaktovať
+          s ďalšími inštrukciami. Prosíme, vyplnte formulár iba jeden krát.
         </Block>
         <Box id="form">
           {/* team name */}
@@ -295,11 +315,13 @@ function FormSection() {
                             <Form.Control>
                               <Form.Checkbox
                                 onClick={() => handlePersonFood(index, "all")}
+                                checked={person.food === "all"}
                               >
                                 bez obmedzení
                               </Form.Checkbox>
                               <Form.Checkbox
                                 onClick={() => handlePersonFood(index, "vegan")}
+                                checked={person.food === "vegan"}
                               >
                                 vegán
                               </Form.Checkbox>
@@ -307,13 +329,15 @@ function FormSection() {
                                 onClick={() =>
                                   handlePersonFood(index, "vegetarian")
                                 }
+                                checked={person.food === "vegetarian"}
                               >
                                 vegetarian
                               </Form.Checkbox>
                               <Form.Checkbox
                                 onClick={() =>
-                                  handlePersonFood(index, "celiac")
+                                  handlePersonFood(index, "frutarian")
                                 }
+                                checked={person.food === "frutarian"}
                               >
                                 frutarian
                               </Form.Checkbox>
@@ -321,6 +345,7 @@ function FormSection() {
                                 onClick={() =>
                                   handlePersonFood(index, "celiac")
                                 }
+                                checked={person.food === "celiac"}
                               >
                                 celiatik
                               </Form.Checkbox>
@@ -328,6 +353,7 @@ function FormSection() {
                                 onClick={() =>
                                   handlePersonFood(index, "breatharian")
                                 }
+                                checked={person.food === "breatharian"}
                               >
                                 bretarián
                               </Form.Checkbox>
@@ -491,7 +517,7 @@ function FormSection() {
               size="small"
               color="black"
             >
-              Pridať ďalšiu osobu do tímu
+              Pridať osobu do tímu
               <FaPlus />
             </Button>
           </div>
@@ -517,7 +543,7 @@ function FormSection() {
           <div>
             <Button
               onClick={() => {
-                handleCreateNewPerson();
+                handleSendForm();
               }}
               color="green"
               disabled={isFormValid === false}
@@ -526,8 +552,7 @@ function FormSection() {
               <MdMail />
               {`Odoslať formulár za tím ${
                 teamName ? '"' + teamName + '"' : ""
-              }`}
-              {persons.map((p) => categoryIcons[p.category])}
+              } s ${persons.length} členmi`}
             </Button>
 
             {isFormValid === false && (
@@ -535,7 +560,7 @@ function FormSection() {
                 <Message.Body>
                   <Block>
                     <MdWarning size={20} /> Skontrolujte prosím, či sú vyplnené
-                    všetky mená a názov tímu
+                    všetky mená a názov tímu a tím má aspoň jedného člena.
                   </Block>
                 </Message.Body>
               </Message>
@@ -543,6 +568,29 @@ function FormSection() {
           </div>
         </Box>
       </Container>
+
+      <Modal show={modalDisplay}>
+        <Modal.Card>
+          <Modal.Card.Header showClose={false}>
+            <Modal.Card.Title>Ďakujeme za vyplnenie formuláru</Modal.Card.Title>
+          </Modal.Card.Header>
+          <Modal.Card.Body>
+            Váš formulár bol odoslaný, ďakujeme za jeho vyplnenie. Prosím
+            nevypĺňajte formulár znova. Ak myslíte, že ste spravili chybu alebo
+            chcete nejakú odpoveď zmeniť, prosím kontaktujte nás priamo.
+          </Modal.Card.Body>
+          <Modal.Card.Footer>
+            <Button
+              color="success"
+              onClick={() => {
+                setModalDisplay(false);
+              }}
+            >
+              V pohode, nemáš za čo
+            </Button>
+          </Modal.Card.Footer>
+        </Modal.Card>
+      </Modal>
     </div>
   );
 }
