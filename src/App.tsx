@@ -39,9 +39,9 @@ function App() {
           <Accommodation />
           <Food />
           <DressCode />
-          <FormSection />
           <Gifts />
           <Program />
+          <FormSection />
         </Section>
         <FooterPart></FooterPart>
       </div>

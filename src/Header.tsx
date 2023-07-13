@@ -83,17 +83,17 @@ function Header({
                     Dress code
                   </a>
                 </li>
-                <li key="form">
-                  <a onClick={() => scrollToSection("section-form")}>
-                    Formulár
-                  </a>
-                </li>
                 <li key="gifts">
                   <a onClick={() => scrollToSection("section-gifts")}>Dary</a>
                 </li>
                 <li key="program">
                   <a onClick={() => scrollToSection("section-program")}>
                     Program
+                  </a>
+                </li>
+                <li key="form">
+                  <a onClick={() => scrollToSection("section-form")}>
+                    Formulár
                   </a>
                 </li>
               </ul>
