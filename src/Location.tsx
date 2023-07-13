@@ -63,7 +63,7 @@ function Location() {
         </Block>
 
         <Block>
-          V areály sa nachádza aj bazén, takže určite si nezabudnite pribaliť
+          V areáli sa nachádza aj bazén, takže určite si nezabudnite pribaliť
           plavky. :)
         </Block>
 

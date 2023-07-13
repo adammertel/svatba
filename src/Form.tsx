@@ -26,7 +26,7 @@ type PersonFood =
   | "all"
   | "vegan"
   | "vegetarian"
-  | "frutarian"
+  | "diabetes"
   | "celiac"
   | "breatharian";
 
@@ -204,8 +204,9 @@ function FormSection() {
         <Block>
           Prosíme, aby pozvaní hostia, ktorí boli o to priamo poprosení,
           vyplnili nasledujúci formulár. Ideálne vyplniť jeden formulár za jeden
-          tím. Po spracovaní všetkých informácií vás budeme prípadne kontaktovať
-          s ďalšími inštrukciami. Prosíme, vyplnte formulár iba jeden krát.
+          tím = partneri, rodina.... Po spracovaní všetkých informácií vás
+          budeme prípadne kontaktovať s ďalšími inštrukciami. Prosíme, vyplnte
+          formulár iba jeden krát.
         </Block>
         <Box id="form">
           {/* team name */}
@@ -214,10 +215,11 @@ function FormSection() {
             <Form.Control>
               <Form.Input
                 size="medium"
-                color={teamName.length > 0 ? "success" : "danger"}
+                color={teamName.length > 0 ? "success" : "wine"}
                 placeholder="názov tímu"
                 type="text"
                 value={teamName}
+                maxLength={20}
                 className="team-name-input"
                 onChange={(e) => {
                   setTeamName(e.target.value);
@@ -271,12 +273,11 @@ function FormSection() {
                         <Columns.Column size={8}>
                           <Form.Control>
                             <Form.Input
-                              color={
-                                person.name.length > 0 ? "black" : "danger"
-                              }
+                              color={person.name.length > 0 ? "black" : "wine"}
                               size="small"
                               placeholder="celé meno"
                               type="text"
+                              maxLength={20}
                               value={person.name}
                               onChange={(e) => {
                                 const newPersons = [...persons];
@@ -331,7 +332,7 @@ function FormSection() {
                     </Form.Field>
 
                     {/* jedlo */}
-                    {/* food: "all" | "vegan" | "vegetarian" | "frutarian" | "celiac" | "breatharian"; */}
+                    {/* food: "all" | "vegan" | "vegetarian" | "diabetes" | "celiac" | "breatharian"; */}
 
                     {person.category !== "t" && (
                       <Form.Field>
@@ -369,9 +370,9 @@ function FormSection() {
                                   </Form.Checkbox>
                                   <Form.Checkbox
                                     onClick={() =>
-                                      handlePersonFood(index, "frutarian")
+                                      handlePersonFood(index, "diabetes")
                                     }
-                                    checked={person.food === "frutarian"}
+                                    checked={person.food === "diabetes"}
                                   >
                                     frutarian
                                   </Form.Checkbox>
@@ -423,7 +424,7 @@ function FormSection() {
                                         marginRight: "5px",
                                       }}
                                     />
-                                    <Tag color="info">odporúčame</Tag>
+                                    <Tag className="is-green">odporúčame</Tag>
                                   </Form.Checkbox>
                                   <Form.Checkbox
                                     checked={person.burger === false}
@@ -530,7 +531,7 @@ function FormSection() {
                                 >
                                   nepijem
                                   <MdNoDrinks />
-                                  <Tag color="info">neodporúčame</Tag>
+                                  <Tag className="is-green">neodporúčame</Tag>
                                 </Form.Checkbox>
                               </Form.Control>
                             </Columns.Column>
@@ -539,7 +540,7 @@ function FormSection() {
 
                         {person.warning === false && (
                           <Block>
-                            <Message color="danger">
+                            <Message className="is-wine">
                               <Message.Header>
                                 <span>
                                   Upozornenie - Alkohol spôsobuje bezvedomie
@@ -615,11 +616,11 @@ function FormSection() {
             </Button>
 
             {isFormValid === false && (
-              <Message color="danger">
+              <Message className="is-wine">
                 <Message.Body>
                   <Block>
                     <MdWarning size={20} /> Skontrolujte prosím, či sú vyplnené
-                    všetky mená a názov tímu a tím má aspoň jedného člena.
+                    všetky mená, názov tímu a tím má aspoň jedného člena.
                   </Block>
                 </Message.Body>
               </Message>
