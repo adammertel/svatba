@@ -6,7 +6,7 @@ function FooterPart() {
       <div id="Footer" style={{ textAlign: "center" }}>
         <Footer>
           <img
-            src="footer.jpg"
+            src="footer-resized.jpg"
             style={{ width: "fit-content", height: "auto" }}
           />
           <Heading subtitle size={1}>
