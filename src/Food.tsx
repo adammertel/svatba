@@ -9,15 +9,15 @@ function Food() {
           Ráno začneme cca od 10 hodiny niečím menším na zakusnutie k prípitkom.
           Po obrade budeme podávať polievku, zvyšok obeda bude riešený formou
           bufetu. K torte máme pripraveného kávamana zo Znojma, ktorý mimo
-          samotného esspressa pripraví aj filter alebo miešaný kávový koktejl.
-          Večer príde znova raut pripravený priamo na grilu, vrátane hamburgeru.
+          samotného espressa pripraví aj filter alebo miešaný kávový koktejl.
+          Večer príde znova raut pripravený priamo na grile, vrátane hamburgeru.
           Ak máte o hamburger záujem, prosím dajte nám vedieť vo formulári,
           pretože potrebný počet surovín je treba dopredu pripraviť.
         </Block>
         <Block>
-          Na pitie budeme mať klasicky vína rôznych farieb, a pivo s processom
-          na čape. K tomu plánujeme pre skúsenejších ponúknuť gin s tonicom a
-          mandlovicu, alebo pre fajnšmekrov borovičku a samozrejme domáce.
+          Na pitie budeme mať klasicky vína rôznych farieb a pivo s processom na
+          čape. K tomu plánujeme pre skúsenejších ponúknuť gin s tonicom a
+          mandľovicu, alebo pre fajnšmekrov borovičku a samozrejme domáce.
         </Block>
         <Block>Sme si istí, že sa máte na čo tešiť.</Block>
 

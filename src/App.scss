@@ -64,9 +64,13 @@ input[type="checkbox"]:checked:after {
   .message-header {
     background-color: $color-wine;
   }
+  .message-body {
+    border-color: $color-wine;
+  }
 }
 
 .page-section {
+  margin-top: 60px;
   margin-bottom: 60px;
 }
 

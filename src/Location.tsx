@@ -24,7 +24,10 @@ function Location() {
         // map.setMinZoom(12);
         setMapEl(map);
         map.setView(llMapCenter, 12);
-        const point = L.marker(llKostka);
+        const point = L.circleMarker(llKostka, {
+          fillColor: "#80374b",
+          color: "#80374b",
+        });
         point.addTo(map);
 
         var CartoDB_Positron = L.tileLayer(
@@ -49,7 +52,7 @@ function Location() {
       <Container>
         <Heading size={3}>Miesto</Heading>
         <Block>
-          Svatba sa bude konať v{" "}
+          Svadba sa bude konať v{" "}
           <a href="https://kostkavpoli.cz/">Kostke v poli</a>, ktorá sa nachádza
           niekde v poli medzi dedinami Žerotice, Horní Dunajovice a Tvořihráz.
           Najbližšie mesto je Znojmo, ktoré leží cca 10 minút cesty autom.

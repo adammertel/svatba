@@ -204,9 +204,9 @@ function FormSection() {
         <Block>
           Prosíme, aby pozvaní hostia, ktorí boli o to priamo poprosení,
           vyplnili nasledujúci formulár. Ideálne vyplniť jeden formulár za jeden
-          tím = partneri, rodina.... Po spracovaní všetkých informácií vás
-          budeme prípadne kontaktovať s ďalšími inštrukciami. Prosíme, vyplnte
-          formulár iba jeden krát.
+          tím = partneri, rodina... Po spracovaní všetkých informácií vás budeme
+          prípadne kontaktovať s ďalšími inštrukciami. Prosíme, vyplnte formulár
+          iba jeden krát.
         </Block>
         <Box id="form">
           {/* team name */}
@@ -309,7 +309,7 @@ function FormSection() {
                               checked={person.category === "m"}
                               onClick={() => handlePersonCategory(index, "m")}
                             >
-                              spotenený muž
+                              spotený muž
                               {categoryIcons["m"]}
                             </Form.Checkbox>
                             <Form.Checkbox
@@ -358,7 +358,7 @@ function FormSection() {
                                     }
                                     checked={person.food === "vegan"}
                                   >
-                                    vegán
+                                    vegan
                                   </Form.Checkbox>
                                   <Form.Checkbox
                                     onClick={() =>

@@ -40,7 +40,7 @@ function Header({
         <Hero.Body>
           <Container>
             <Heading style={{ color: "white" }} size={2} subtitle>
-              Svatba
+              Svadba
             </Heading>
             <Heading style={{ color: "white" }} size={1}>
               Petra & Adam
