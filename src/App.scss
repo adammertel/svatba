@@ -185,6 +185,21 @@ input[type="checkbox"]:checked:after {
   }
 }
 
+.footer {
+  .photo-copyright {
+    float: right;
+    a {
+      margin-right: 10px;
+      vertical-align: middle;
+      font-weight: 300;
+      font-size: 18px;
+      svg {
+        margin-right: 2px;
+      }
+    }
+  }
+}
+
 @import "../node_modules/bulma/sass/utilities/_all.sass";
 @import "../node_modules/bulma/sass/base/_all.sass";
 @import "../node_modules/bulma/sass/elements/button.sass";
